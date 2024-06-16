@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "entitlements:region_broadcast"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "entitlements:blocks/region_broadcast"
+}

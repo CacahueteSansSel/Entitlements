@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "entitlements",
+  "version": "${version}",
+
+  "name": "Entitlements",
+  "description": "Display region names inside your world !",
+  "authors": [],
+  "contact": {},
+
+  "license": "GNU GPL 3.0",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.cacahuete.entitlements.fabric.EntitlementsFabric"
+    ],
+    "client": [
+      "dev.cacahuete.entitlements.fabric.ClientEntitlementsFabric"
+    ]
+  },
+  "mixins": [
+    "entitlements.mixins.json",
+    "entitlements-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": ">=1.20.1"
+  }
+}
