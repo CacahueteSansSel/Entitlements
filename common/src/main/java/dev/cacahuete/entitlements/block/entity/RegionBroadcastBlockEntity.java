@@ -5,6 +5,7 @@ import dev.cacahuete.entitlements.overlay.RegionTitleOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.SubtitleOverlay;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -26,16 +27,16 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void load(CompoundTag compoundTag) {
-        super.load(compoundTag);
+    protected void loadAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.loadAdditional(compoundTag, provider);
 
         title = compoundTag.getString("Title");
         radius = compoundTag.getInt("Radius");
     }
 
     @Override
-    protected void saveAdditional(CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
+    protected void saveAdditional(CompoundTag compoundTag, HolderLookup.Provider provider) {
+        super.saveAdditional(compoundTag, provider);
 
         compoundTag.putString("Title", title);
         compoundTag.putInt("Radius", radius);
@@ -65,8 +66,9 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        return this.saveWithoutMetadata(provider);
     }
 
     private void markUpdated() {

@@ -1,6 +1,7 @@
 package dev.cacahuete.entitlements.overlay;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 
@@ -12,7 +13,7 @@ public class RegionTitleOverlay {
     static String regionNameText;
     static State state = State.Hidden;
 
-    public static void render(GuiGraphics graphics, float partialTicks) {
+    public static void render(GuiGraphics graphics, DeltaTracker d) {
         if (state == State.Hidden || regionNameText == null) return;
 
         Minecraft mc = Minecraft.getInstance();

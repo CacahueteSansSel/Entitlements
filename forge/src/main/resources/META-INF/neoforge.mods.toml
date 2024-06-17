@@ -1,0 +1,38 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+#issueTrackerURL = ""
+license = "GNU GPL v3"
+
+[[mods]]
+modId = "entitlements"
+version = "${version}"
+displayName = "Entitlements"
+authors = "CacahueteDev"
+description = '''
+Display region names inside your world !
+'''
+logoFile = "icon.png"
+
+[[dependencies.entitlements]]
+modId = "neoforge"
+type = "required"
+versionRange = "[20.6,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.entitlements]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,1.21.1)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.entitlements]]
+modId = "architectury"
+type = "required"
+versionRange = "[12.1.2,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[mixins]]
+config = "entitlements.mixins.json"
