@@ -1,5 +1,10 @@
 {
   "item.entitlements.icon": "Tab Icon",
+  "item.entitlements.copper_wrench": "Copper Wrench",
+  "item.entitlements.copper_wrench.mode.default": "Default Mode",
+  "item.entitlements.copper_wrench.mode.radius": "edit block radius mode",
+  "item.entitlements.copper_wrench.mode.time": "edit title display time mode",
+  "item.entitlements.copper_wrench.set_mode": "Set wrench mode to the %s",
   "block.entitlements.region_broadcast": "Region Broadcast Block",
   "ui.entitlements.now_entering": "Now Entering"
 }

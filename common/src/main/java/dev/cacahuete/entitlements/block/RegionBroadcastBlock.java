@@ -2,6 +2,7 @@ package dev.cacahuete.entitlements.block;
 
 import dev.cacahuete.entitlements.block.entity.BlockEntityRegister;
 import dev.cacahuete.entitlements.block.entity.RegionBroadcastBlockEntity;
+import dev.cacahuete.entitlements.item.ItemRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -58,7 +59,9 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             return InteractionResult.PASS;
         }
 
-        if (player.isCrouching()) {
+        ItemStack item = player.getItemInHand(interactionHand);
+
+        if (item.is(ItemRegister.COPPER_WRENCH_RADIUS.get())) {
             int newRadius = bd.getRadius() * 2;
             if (newRadius > 256) newRadius = 10;
 
@@ -68,7 +71,15 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
-        ItemStack item = player.getItemInHand(interactionHand);
+        if (item.is(ItemRegister.COPPER_WRENCH_TIME.get())) {
+            float newDisplayTime = bd.getDisplayTime() + 5;
+            if (newDisplayTime > 15) newDisplayTime = 5;
+
+            bd.setDisplayTime(newDisplayTime);
+            player.displayClientMessage(Component.literal("Set title display time to " + newDisplayTime + " seconds"), true);
+
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
 
         if (item.is(Items.NAME_TAG) && item.hasTag()) {
             String tagName = item.getDisplayName().getString();

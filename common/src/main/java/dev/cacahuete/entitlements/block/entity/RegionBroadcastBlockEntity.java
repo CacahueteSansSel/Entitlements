@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.BossEvent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,6 +21,8 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
 
     String title = "Untitled Area";
     int radius = 10;
+    float displayTime = 5f;
+    ItemStack displayItemStack;
 
     public RegionBroadcastBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityRegister.DISC_ENCODER.get(), blockPos, blockState);
@@ -29,8 +32,11 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
     public void load(CompoundTag compoundTag) {
         super.load(compoundTag);
 
-        title = compoundTag.getString("Title");
-        radius = compoundTag.getInt("Radius");
+        title = compoundTag.contains("Title") ? compoundTag.getString("Title") : "Untitled Area";
+        radius = compoundTag.contains("Radius") ? compoundTag.getInt("Radius") : 10;
+        displayTime = compoundTag.contains("DisplayTime") ? compoundTag.getFloat("DisplayTime") : 5f;
+        if (compoundTag.contains("DisplayItem"))
+            displayItemStack = ItemStack.of(compoundTag.getCompound("DisplayItem"));
     }
 
     @Override
@@ -39,6 +45,13 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
 
         compoundTag.putString("Title", title);
         compoundTag.putInt("Radius", radius);
+        compoundTag.putFloat("DisplayTime", displayTime);
+
+        if (displayItemStack != null) {
+            CompoundTag itemTag = new CompoundTag();
+            displayItemStack.save(itemTag);
+            compoundTag.put("DisplayItem", itemTag);
+        }
     }
 
     public int getRadius() {
@@ -47,6 +60,14 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
 
     public String getTitle() {
         return title;
+    }
+
+    public float getDisplayTime() {
+        return displayTime;
+    }
+
+    public ItemStack getDisplayItemStack() {
+        return displayItemStack;
     }
 
     public void setTitle(String title) {
@@ -59,6 +80,14 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
         this.radius = radius;
 
         markUpdated();
+    }
+
+    public void setDisplayTime(float displayTime) {
+        this.displayTime = displayTime;
+    }
+
+    public void setDisplayItemStack(ItemStack displayItemStack) {
+        this.displayItemStack = displayItemStack;
     }
 
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
@@ -83,7 +112,7 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
         if (lastBlockPos != worldPosition && blockHorizontalDistance <= radius) {
             lastBlockPos = worldPosition;
 
-            RegionTitleOverlay.show(title);
+            RegionTitleOverlay.show(title, displayTime);
         }
 
         if (lastBlockPos == worldPosition && blockHorizontalDistance > radius) {

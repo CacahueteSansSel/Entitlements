@@ -13,6 +13,7 @@ public class RegionTitleOverlay {
     static String regionNameText;
     static State state = State.Hidden;
     static Component nowEnteringComponent;
+    static float displayTimeSeconds;
 
     public static void render(GuiGraphics graphics, float partialTicks) {
         if (state == State.Hidden || regionNameText == null) return;
@@ -36,13 +37,14 @@ public class RegionTitleOverlay {
             case Shown:
                 timer += dt;
 
-                if (timer > 10) state = State.Hiding;
+                if (timer > displayTimeSeconds) state = State.Hiding;
 
                 break;
             case Hiding:
                 if (alpha <= 0) {
                     alpha = 0f;
                     state = State.Hidden;
+                    regionNameText = null;
                 }
                 else alpha -= dt;
 
@@ -60,10 +62,11 @@ public class RegionTitleOverlay {
         }
     }
 
-    public static void show(String regionName) {
+    public static void show(String regionName, float displayTime) {
         if (Objects.equals(regionNameText, regionName)) return;
 
         regionNameText = regionName;
+        displayTimeSeconds = displayTime;
         alpha = 0f;
         timer = 0f;
         nowEnteringComponent = Component.translatable("ui.entitlements.now_entering");
