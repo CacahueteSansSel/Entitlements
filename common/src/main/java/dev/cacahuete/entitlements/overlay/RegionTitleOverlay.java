@@ -3,6 +3,7 @@ package dev.cacahuete.entitlements.overlay;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ public class RegionTitleOverlay {
     static float timer = 0f;
     static String regionNameText;
     static State state = State.Hidden;
+    static Component nowEnteringComponent;
 
     public static void render(GuiGraphics graphics, float partialTicks) {
         if (state == State.Hidden || regionNameText == null) return;
@@ -50,7 +52,7 @@ public class RegionTitleOverlay {
         if (alpha > 0.1f) {
             graphics.pose().pushPose();
             RenderSystem.enableBlend();
-            graphics.drawCenteredString(mc.font, "Now entering", graphics.guiWidth() / 2, 45, finalColor);
+            graphics.drawCenteredString(mc.font, nowEnteringComponent.getString(), graphics.guiWidth() / 2, 45, finalColor);
             graphics.pose().scale(2f, 2f, 2f);
             graphics.drawCenteredString(mc.font, regionNameText, graphics.guiWidth() / 2 / 2, 30, finalColor);
             RenderSystem.disableBlend();
@@ -64,6 +66,7 @@ public class RegionTitleOverlay {
         regionNameText = regionName;
         alpha = 0f;
         timer = 0f;
+        nowEnteringComponent = Component.translatable("ui.entitlements.now_entering");
 
         state = State.Showing;
     }

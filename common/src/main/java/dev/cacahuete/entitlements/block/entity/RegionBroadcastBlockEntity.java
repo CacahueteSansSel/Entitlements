@@ -85,5 +85,9 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
 
             RegionTitleOverlay.show(title);
         }
+
+        if (lastBlockPos == worldPosition && blockHorizontalDistance > radius) {
+            lastBlockPos = null;
+        }
     }
 }
