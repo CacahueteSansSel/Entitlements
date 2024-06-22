@@ -66,7 +66,7 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             if (newRadius > 256) newRadius = 10;
 
             bd.setRadius(newRadius);
-            player.displayClientMessage(Component.literal("Set region radius to " + newRadius + " blocks"), true);
+            player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_radius", newRadius), true);
 
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -76,7 +76,7 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             if (newDisplayTime > 15) newDisplayTime = 5;
 
             bd.setDisplayTime(newDisplayTime);
-            player.displayClientMessage(Component.literal("Set title display time to " + newDisplayTime + " seconds"), true);
+            player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_display_time", newDisplayTime), true);
 
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -86,7 +86,7 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             tagName = tagName.substring(1, tagName.length() - 1); // Remove the [] characters
 
             bd.setTitle(tagName);
-            player.displayClientMessage(Component.literal("Changed region name to " + tagName), true);
+            player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_name", tagName), true);
 
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -96,14 +96,14 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
 
     @Override
     public MutableComponent getDescription() {
-        return Component.literal("Broadcasts a region name text to nearby entering players");
+        return Component.translatable("block.entitlements.region_broadcast.desc");
     }
 
     @Override
     public List<BlockInteraction> getInteractions() {
         BlockInteraction[] array = {
-                new BlockInteraction("Right Click with Name Tag", "change region name"),
-                new BlockInteraction("SHIFT + Right Click", "change action radius")
+                new BlockInteraction(Component.translatable("ui.entitlements.action.right_click", Items.NAME_TAG.getDescription().getString()), Component.translatable("ui.entitlements.action.change_region_name")),
+                new BlockInteraction(Component.translatable("ui.entitlements.action.right_click", ItemRegister.COPPER_WRENCH.get().getDescription().getString()), Component.translatable("ui.entitlements.action.change_settings")),
         };
 
         return Arrays.stream(array).toList();

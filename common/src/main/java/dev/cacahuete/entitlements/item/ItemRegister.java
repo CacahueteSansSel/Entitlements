@@ -18,10 +18,10 @@ public class ItemRegister {
             = ITEMS.register("copper_wrench", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1).arch$tab(CreativeTabRegister.MAIN), CopperWrenchItem.Mode.Default));
 
     public static final RegistrySupplier<Item> COPPER_WRENCH_RADIUS
-            = ITEMS.register("copper_wrench_radius", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1).arch$tab(CreativeTabRegister.MAIN), CopperWrenchItem.Mode.Radius));
+            = ITEMS.register("copper_wrench_radius", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1), CopperWrenchItem.Mode.Radius));
 
     public static final RegistrySupplier<Item> COPPER_WRENCH_TIME
-            = ITEMS.register("copper_wrench_time", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1).arch$tab(CreativeTabRegister.MAIN), CopperWrenchItem.Mode.Time));
+            = ITEMS.register("copper_wrench_time", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1), CopperWrenchItem.Mode.Time));
 
     public static void register() {
         ITEMS.register();

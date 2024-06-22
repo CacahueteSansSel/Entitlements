@@ -6,5 +6,14 @@
   "item.entitlements.copper_wrench.mode.time": "edit title display time mode",
   "item.entitlements.copper_wrench.set_mode": "Set wrench mode to the %s",
   "block.entitlements.region_broadcast": "Region Broadcast Block",
-  "ui.entitlements.now_entering": "Now Entering"
+  "block.entitlements.region_broadcast.edit_radius": "Set region radius to %s blocks",
+  "block.entitlements.region_broadcast.edit_display_time": "Set display time to %s seconds",
+  "block.entitlements.region_broadcast.edit_name": "Set region name to %s",
+  "block.entitlements.region_broadcast.desc": "Broadcasts a region name text to nearby entering players",
+  "ui.entitlements.now_entering": "Now Entering",
+  "ui.entitlements.when_placed": "When placed In World:",
+  "ui.entitlements.action": "to %s",
+  "ui.entitlements.action.right_click": "Right Click with %s",
+  "ui.entitlements.action.change_region_name": "change region name",
+  "ui.entitlements.action.change_settings": "change text display time or block radius"
 }

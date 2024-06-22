@@ -1,19 +1,21 @@
 package dev.cacahuete.entitlements.block;
 
-public class BlockInteraction {
-    String playerInputAction;
-    String intendedResult;
+import net.minecraft.network.chat.Component;
 
-    public BlockInteraction(String playerInputAction, String intendedResult) {
+public class BlockInteraction {
+    Component playerInputAction;
+    Component intendedResult;
+
+    public BlockInteraction(Component playerInputAction, Component intendedResult) {
         this.playerInputAction = playerInputAction;
         this.intendedResult = intendedResult;
     }
 
-    public String getPlayerInputAction() {
+    public Component getPlayerInputAction() {
         return playerInputAction;
     }
 
-    public String getIntendedResult() {
+    public Component getIntendedResult() {
         return intendedResult;
     }
 }
