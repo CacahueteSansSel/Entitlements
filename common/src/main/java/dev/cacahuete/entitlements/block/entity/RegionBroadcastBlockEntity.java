@@ -37,7 +37,7 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
         radius = compoundTag.contains("Radius") ? compoundTag.getInt("Radius") : 10;
         displayTime = compoundTag.contains("DisplayTime") ? compoundTag.getFloat("DisplayTime") : 5f;
         if (compoundTag.contains("DisplayItem"))
-            displayItemStack = ItemStack.of(compoundTag.getCompound("DisplayItem"));
+            displayItemStack = ItemStack.parse(provider, compoundTag.getCompound("DisplayItem")).get();
     }
 
     @Override
@@ -49,9 +49,7 @@ public class RegionBroadcastBlockEntity extends BlockEntity {
         compoundTag.putFloat("DisplayTime", displayTime);
 
         if (displayItemStack != null) {
-            CompoundTag itemTag = new CompoundTag();
-            displayItemStack.save(itemTag);
-            compoundTag.put("DisplayItem", itemTag);
+            compoundTag.put("DisplayItem", displayItemStack.save(provider));
         }
     }
 

@@ -17,7 +17,7 @@
     }
   },
   "result": {
-    "item": "entitlements:region_broadcast",
+    "id": "entitlements:region_broadcast",
     "count": 1
   }
 }

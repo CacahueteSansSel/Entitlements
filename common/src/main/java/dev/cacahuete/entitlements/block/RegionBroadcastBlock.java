@@ -68,10 +68,9 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        ItemStack item = player.getItemInHand(interactionHand);
-        DataComponentMap components = item.getComponents();
+        DataComponentMap components = itemStack.getComponents();
 
-        if (item.is(ItemRegister.COPPER_WRENCH_RADIUS.get())) {
+        if (itemStack.is(ItemRegister.COPPER_WRENCH_RADIUS.get())) {
             int newRadius = bd.getRadius() * 2;
             if (newRadius > 256) newRadius = 10;
 
@@ -91,7 +90,7 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             return ItemInteractionResult.SUCCESS;
         }
 
-        if (item.is(ItemRegister.COPPER_WRENCH_TIME.get())) {
+        if (itemStack.is(ItemRegister.COPPER_WRENCH_TIME.get())) {
             float newDisplayTime = bd.getDisplayTime() + 5;
             if (newDisplayTime > 15) newDisplayTime = 5;
 
