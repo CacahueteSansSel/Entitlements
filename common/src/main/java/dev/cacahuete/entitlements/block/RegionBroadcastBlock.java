@@ -1,13 +1,16 @@
 package dev.cacahuete.entitlements.block;
 
+import com.mojang.serialization.MapCodec;
 import dev.cacahuete.entitlements.block.entity.BlockEntityRegister;
 import dev.cacahuete.entitlements.block.entity.RegionBroadcastBlockEntity;
 import dev.cacahuete.entitlements.item.ItemRegister;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -25,6 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.CubeVoxelShape;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -33,6 +37,11 @@ import java.util.List;
 public class RegionBroadcastBlock extends BaseEntityBlock implements DescriptionBlock {
     public RegionBroadcastBlock(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return null;
     }
 
     @Override
@@ -53,13 +62,14 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
     }
 
     @Override
-    public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         BlockEntity entity = level.getBlockEntity(blockPos);
         if (!(entity instanceof RegionBroadcastBlockEntity bd)) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
         ItemStack item = player.getItemInHand(interactionHand);
+        DataComponentMap components = item.getComponents();
 
         if (item.is(ItemRegister.COPPER_WRENCH_RADIUS.get())) {
             int newRadius = bd.getRadius() * 2;
@@ -68,7 +78,17 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             bd.setRadius(newRadius);
             player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_radius", newRadius), true);
 
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.SUCCESS;
+        }
+
+        if (itemStack.is(Items.NAME_TAG) && !components.isEmpty()) {
+            String tagName = itemStack.getDisplayName().getString();
+            tagName = tagName.substring(1, tagName.length() - 1); // Remove the [] characters
+
+            bd.setTitle(tagName);
+            player.displayClientMessage(Component.literal("Changed region name to " + tagName), true);
+
+            return ItemInteractionResult.SUCCESS;
         }
 
         if (item.is(ItemRegister.COPPER_WRENCH_TIME.get())) {
@@ -78,20 +98,20 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             bd.setDisplayTime(newDisplayTime);
             player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_display_time", newDisplayTime), true);
 
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+      
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+        BlockEntity entity = level.getBlockEntity(blockPos);
+        if (!(entity instanceof RegionBroadcastBlockEntity bd)) {
+            return InteractionResult.PASS;
         }
 
-        if (item.is(Items.NAME_TAG) && item.hasTag()) {
-            String tagName = item.getDisplayName().getString();
-            tagName = tagName.substring(1, tagName.length() - 1); // Remove the [] characters
-
-            bd.setTitle(tagName);
-            player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_name", tagName), true);
-
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return InteractionResult.PASS;
     }
 
     @Override
