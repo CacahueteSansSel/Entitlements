@@ -14,6 +14,15 @@ public class ItemRegister {
     public static final RegistrySupplier<Item> ICON
             = ITEMS.register("icon", () -> new Item(new Item.Properties()));
 
+    public static final RegistrySupplier<Item> COPPER_WRENCH
+            = ITEMS.register("copper_wrench", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1).arch$tab(CreativeTabRegister.MAIN), CopperWrenchItem.Mode.Default));
+
+    public static final RegistrySupplier<Item> COPPER_WRENCH_RADIUS
+            = ITEMS.register("copper_wrench_radius", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1), CopperWrenchItem.Mode.Radius));
+
+    public static final RegistrySupplier<Item> COPPER_WRENCH_TIME
+            = ITEMS.register("copper_wrench_time", () -> new CopperWrenchItem(new Item.Properties().stacksTo(1), CopperWrenchItem.Mode.Time));
+
     public static void register() {
         ITEMS.register();
     }

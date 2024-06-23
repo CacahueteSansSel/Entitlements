@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "entitlements:item/copper_wrench_time"
+  }
+}

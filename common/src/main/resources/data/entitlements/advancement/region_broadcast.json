@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "entitlements:region_broadcast"
+      "id": "entitlements:region_broadcast"
     },
     "title": "This is my property !",
     "description": "Craft a Region Broadcast",

@@ -3,6 +3,7 @@ package dev.cacahuete.entitlements.block;
 import com.mojang.serialization.MapCodec;
 import dev.cacahuete.entitlements.block.entity.BlockEntityRegister;
 import dev.cacahuete.entitlements.block.entity.RegionBroadcastBlockEntity;
+import dev.cacahuete.entitlements.item.ItemRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.network.chat.Component;
@@ -69,6 +70,16 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
 
         DataComponentMap components = itemStack.getComponents();
 
+        if (itemStack.is(ItemRegister.COPPER_WRENCH_RADIUS.get())) {
+            int newRadius = bd.getRadius() * 2;
+            if (newRadius > 256) newRadius = 10;
+
+            bd.setRadius(newRadius);
+            player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_radius", newRadius), true);
+
+            return ItemInteractionResult.SUCCESS;
+        }
+
         if (itemStack.is(Items.NAME_TAG) && !components.isEmpty()) {
             String tagName = itemStack.getDisplayName().getString();
             tagName = tagName.substring(1, tagName.length() - 1); // Remove the [] characters
@@ -79,6 +90,16 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             return ItemInteractionResult.SUCCESS;
         }
 
+        if (itemStack.is(ItemRegister.COPPER_WRENCH_TIME.get())) {
+            float newDisplayTime = bd.getDisplayTime() + 5;
+            if (newDisplayTime > 15) newDisplayTime = 5;
+
+            bd.setDisplayTime(newDisplayTime);
+            player.displayClientMessage(Component.translatable("block.entitlements.region_broadcast.edit_display_time", newDisplayTime), true);
+
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
+      
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
@@ -89,29 +110,19 @@ public class RegionBroadcastBlock extends BaseEntityBlock implements Description
             return InteractionResult.PASS;
         }
 
-        if (player.isCrouching()) {
-            int newRadius = bd.getRadius() * 2;
-            if (newRadius > 300) newRadius = 10;
-
-            bd.setRadius(newRadius);
-            player.displayClientMessage(Component.literal("Set region radius to " + newRadius + " blocks"), true);
-
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
         return InteractionResult.PASS;
     }
 
     @Override
     public MutableComponent getDescription() {
-        return Component.literal("Broadcasts a region name text to nearby entering players");
+        return Component.translatable("block.entitlements.region_broadcast.desc");
     }
 
     @Override
     public List<BlockInteraction> getInteractions() {
         BlockInteraction[] array = {
-                new BlockInteraction("Right Click with Name Tag", "change region name"),
-                new BlockInteraction("SHIFT + Right Click", "change action radius")
+                new BlockInteraction(Component.translatable("ui.entitlements.action.right_click", Items.NAME_TAG.getDescription().getString()), Component.translatable("ui.entitlements.action.change_region_name")),
+                new BlockInteraction(Component.translatable("ui.entitlements.action.right_click", ItemRegister.COPPER_WRENCH.get().getDescription().getString()), Component.translatable("ui.entitlements.action.change_settings")),
         };
 
         return Arrays.stream(array).toList();

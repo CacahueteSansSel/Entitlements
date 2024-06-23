@@ -1,0 +1,19 @@
+{
+  "item.entitlements.icon": "Icône",
+  "item.entitlements.copper_wrench": "Clé à molette en cuivre",
+  "item.entitlements.copper_wrench.mode.default": "Mode par défaut",
+  "item.entitlements.copper_wrench.mode.radius": "Mode édition de rayon",
+  "item.entitlements.copper_wrench.mode.time": "Mode édition du temps d'affichage",
+  "item.entitlements.copper_wrench.set_mode": "%s activé",
+  "block.entitlements.region_broadcast": "Bloc de diffuseur régional",
+  "block.entitlements.region_broadcast.edit_radius": "Rayon de région défini à %s blocs",
+  "block.entitlements.region_broadcast.edit_display_time": "Temps d'affichage défini à %s secondes",
+  "block.entitlements.region_broadcast.edit_name": "Nom de la région défini à %s",
+  "block.entitlements.region_broadcast.desc": "Diffuse le nom d'une région dans un rayon de blocs défini",
+  "ui.entitlements.now_entering": "Vous entrez dans",
+  "ui.entitlements.when_placed": "Quand placé dans le monde :",
+  "ui.entitlements.action": "pour %s",
+  "ui.entitlements.action.right_click": "Clic droit avec %s",
+  "ui.entitlements.action.change_region_name": "changer le nom de la région",
+  "ui.entitlements.action.change_settings": "changer le temps d'affichage ou le rayon d'effet"
+}

@@ -27,10 +27,12 @@ public class DescriptionBlockItem extends BlockItem {
 
         list.add(Component.empty());
 
-        list.add(Component.literal("When placed In World:").withStyle(ChatFormatting.GRAY));
+        list.add(Component.translatable("ui.entitlements.when_placed").withStyle(ChatFormatting.GRAY));
         for (BlockInteraction interaction : descBlock.getInteractions()) {
-            list.add(Component.literal("[" + interaction.getPlayerInputAction() + "]").withStyle(ChatFormatting.WHITE)
-                    .append(Component.literal(" to " + interaction.getIntendedResult()).withStyle(ChatFormatting.GRAY)));
+            list.add(Component.literal("[" + interaction.getPlayerInputAction().getString() + "] ")
+                    .withStyle(ChatFormatting.WHITE)
+                    .append(Component.translatable("ui.entitlements.action", interaction.getIntendedResult().getString())
+                            .withStyle(ChatFormatting.GRAY)));
         }
     }
 }
